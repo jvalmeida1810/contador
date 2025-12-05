@@ -38,6 +38,8 @@ class _HomePageState extends State<HomePage> {
     
     print(count);
   }
+  bool get isEmpty => count == 0 ;
+  bool get isFull => count == 20 ;
 
   @override
   Widget build(BuildContext context) {
@@ -53,29 +55,29 @@ class _HomePageState extends State<HomePage> {
         child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'PODE ENTRAR!',
-            style: TextStyle(fontSize: 30, color: Colors.black),
+           Text(
+              isFull ? 'LOTADO ' : 'PODE ENTRAR!',
+            style:  TextStyle(fontSize: 30, color: isFull ? Colors.purple : Colors.black),
           ),
           const SizedBox(height: 32,),
           
-          Text('$count', style: const TextStyle(fontSize: 100, color: Colors.white)),
+          Text('$count', style:  TextStyle(fontSize: 100, color: isFull ? Colors.red : Colors.white)),
           const SizedBox(height: 32,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextButton(
                 style: TextButton.styleFrom(
-                  backgroundColor: Colors.white,
+                  backgroundColor: isEmpty ? Colors.white.withValues(alpha: 0.2) : Colors.white,
                   fixedSize: const Size(100, 100),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24),
                   ),
                 ),
-                onPressed: decrement,
+                onPressed: isEmpty ? null : decrement,
                 child: Text(
                   'SAIU',
-                  style: TextStyle(color: Colors.black
+                  style: TextStyle(color:  Colors.black
                   , fontSize: 16),
                 ),
               ),
@@ -83,13 +85,13 @@ class _HomePageState extends State<HomePage> {
 
               TextButton(
                 style: TextButton.styleFrom(
-                  backgroundColor: Colors.white,
+                  backgroundColor: isFull ? Colors.white.withValues(alpha: 0.2) : Colors.white,
                   fixedSize: Size(100, 100),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(24),
                   ),
                 ),
-                onPressed: increment,
+                onPressed: isFull ? null : increment,
                 child: Text(
                   'ENTROU',
                   style: TextStyle(color: Colors.black
